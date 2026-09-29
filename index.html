@@ -1,0 +1,52 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><title>C3 Customer Walkthrough</title><style>
+:root{--bg:#020912;--card:#071827;--blue:#0797e6;--white:#fff;--muted:#a9bdd0;--border:#14547e}*{box-sizing:border-box}body{margin:0;background:linear-gradient(#01060b,#061522);color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}.wrap{max-width:760px;margin:auto;padding:16px 14px 42px}.hero,.card{border:1px solid var(--border);border-radius:18px;background:linear-gradient(135deg,#02070d,#07304d);padding:18px;margin-bottom:12px}.card{background:linear-gradient(#0a2134,#071827)}.logo{font-size:28px;font-weight:900}.logo b{color:#42b8ff}.tag,.note{color:var(--muted)}h2{font-size:18px;margin:0 0 10px}label{display:block;font-size:13px;font-weight:800;margin:10px 0 5px}input,textarea{width:100%;min-height:48px;border:1px solid #28658d;background:#04111d;color:#fff;border-radius:11px;padding:10px;font-size:17px}.grid,.checks{display:grid;grid-template-columns:1fr 1fr;gap:9px}.freq{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.freq button,.choice{min-height:46px;border:1px solid #28658d;background:#061522;color:#fff;border-radius:11px;font-weight:800}.active{background:#0797e6!important}.choice{text-align:left;padding:10px}.choice.active:before{content:"✓ "}.base{display:flex;justify-content:space-between;margin-top:12px;padding:13px;border:1px solid #176da8;border-radius:12px}.base strong{font-size:22px;color:#6acbff}.price{position:sticky;bottom:10px;background:linear-gradient(135deg,#006eae,#0797e6);border:1px solid #74d0ff;border-radius:18px;padding:17px;box-shadow:0 10px 30px #0009}.amount{font-size:38px;font-weight:950}.breakdown{font-size:13px;line-height:1.6}.note{font-size:12px;margin-top:9px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}.actions button{min-height:48px;border-radius:11px;border:0;font-weight:900}.save{background:#fff;color:#052036}.reset{background:#071827;color:#fff;border:1px solid #3979a3!important}@media(max-width:520px){.grid,.checks{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header class="hero"><div class="logo"><b>C3</b> Chicago Cleaning Company</div><div class="tag">Customer Walkthrough & Pricing</div></header>
+<section class="card"><h2>Customer Information</h2><div class="grid"><div><label>Company Name</label><input id="companyName" placeholder="Company name"></div><div><label>Contact Name</label><input id="contactName" placeholder="Customer contact"></div><div><label>Phone Number</label><input id="customerPhone" type="tel" placeholder="(555) 555-5555"></div><div><label>Email Address</label><input id="customerEmail" type="email" inputmode="email" placeholder="customer@company.com"></div><div><label>Approx. Square Footage</label><input type="number" placeholder="e.g. 5,000"></div></div><label>Property Address</label><input id="propertyAddress" placeholder="Street, city, state, ZIP"></section>
+<section class="card"><h2>Service Frequency</h2><div class="freq" id="freq"><button data-n="1">1×</button><button data-n="2">2×</button><button class="active" data-n="3">3×</button><button data-n="4">4×</button><button data-n="5">5×</button></div><div class="base"><span>Base Monthly Service</span><strong id="base">$1,500</strong></div><div class="note">$500/month per weekly cleaning visit.</div></section>
+<section class="card"><h2>Building Walkthrough</h2><div class="grid"><div><label>Restrooms</label><input type="number" value="2"></div><div><label>Toilets</label><input type="number" value="2"></div><div><label>Urinals</label><input type="number" value="0"></div><div><label>Break Rooms / Kitchens</label><input type="number" value="1"></div></div><label>Standard Service Checklist</label><div class="checks"><button class="choice active">Trash Removal</button><button class="choice active">Vacuuming</button><button class="choice active">Hard-Floor Cleaning</button><button class="choice active">Dusting</button><button class="choice active">Common Areas</button><button class="choice">High-Touch Disinfecting</button></div></section>
+<section class="card"><h2>Optional Services — Mock Pricing</h2><div class="checks" id="addons"><button class="choice" data-price="150">Consumable Restocking +$150</button><button class="choice" data-price="75">Interior Glass +$75</button><button class="choice" data-price="200">Deep Cleaning +$200</button><button class="choice" data-price="150">Carpet Service +$150</button><button class="choice" data-price="200">Floor Scrub / Buff +$200</button><button class="choice" data-price="500">Extra Day of Cleaning +$500</button></div>
+<label>Miscellaneous</label><input id="misc" type="number" inputmode="decimal" min="0" step="25" value="0" placeholder="Enter miscellaneous monthly amount">
+<div class="note">Use Miscellaneous for a custom charge and describe what it covers in the Walkthrough Notes section.</div></section>
+<section class="card"><h2>Walkthrough Notes</h2><textarea id="walkthroughNotes" rows="4" placeholder="Access instructions, special requests, problem areas..."></textarea></section>
+<div class="price"><b>ESTIMATED MONTHLY SERVICE</b><div class="amount" id="total">$1,500 / month</div><div class="breakdown" id="breakdown">Base cleaning: $1,500<br>Add-ons: $0</div></div>
+<div class="actions" style="grid-template-columns:1fr;margin-top:12px"><button id="emailQuote" class="save" type="button">Email Quote to Customer</button></div>
+<div class="actions"><button class="save" type="button">Save Walkthrough</button><button class="reset" type="button" onclick="location.reload()">Reset</button></div>
+</div><script>
+let visits=3;const fmt=n=>'$'+n.toLocaleString('en-US');function calc(){const base=visits*500;let a=0;document.querySelectorAll('#addons .choice.active').forEach(x=>a+=Number(x.dataset.price||0));const misc=Math.max(0,Number(document.getElementById('misc').value||0));document.getElementById('base').textContent=fmt(base);document.getElementById('total').textContent=fmt(base+a+misc)+' / month';document.getElementById('breakdown').innerHTML='Base cleaning: '+fmt(base)+'<br>Add-ons: '+fmt(a)+'<br>Miscellaneous: '+fmt(misc)}
+document.querySelectorAll('#freq button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#freq button').forEach(x=>x.classList.remove('active'));b.classList.add('active');visits=Number(b.dataset.n);calc()});document.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{b.classList.toggle('active');calc()});document.getElementById('misc').addEventListener('input',calc);
+
+document.getElementById('emailQuote').addEventListener('click',()=>{
+ const email=(document.getElementById('customerEmail').value||'').trim();
+ if(!email){ alert('Please enter the customer email address first.'); document.getElementById('customerEmail').focus(); return; }
+ const company=(document.getElementById('companyName').value||'Customer').trim();
+ const contact=(document.getElementById('contactName').value||'').trim();
+ const phone=(document.getElementById('customerPhone').value||'').trim();
+ const address=(document.getElementById('propertyAddress').value||'').trim();
+ const notes=(document.getElementById('walkthroughNotes').value||'').trim();
+ const base=visits*500;
+ let addonTotal=0, selected=[];
+ document.querySelectorAll('#addons .choice.active').forEach(x=>{
+   const price=Number(x.dataset.price||0);
+   addonTotal+=price;
+   selected.push(x.textContent.trim());
+ });
+ const misc=Math.max(0,Number(document.getElementById('misc').value||0));
+ const total=base+addonTotal+misc;
+ const subject='Chicago Cleaning Company – Cleaning Service Quote';
+ let body='Hello'+(contact?' '+contact:'')+',\n\n';
+ body+='Thank you for the opportunity to provide a cleaning service estimate for '+company+'.\n\n';
+ body+='PROPOSED CLEANING SERVICE\n';
+ body+='Service frequency: '+visits+' day'+(visits===1?'':'s')+' per week\n';
+ body+='Base monthly service: '+fmt(base)+'\n';
+ if(selected.length){ body+='\nSelected additional services:\n- '+selected.join('\n- ')+'\n'; }
+ if(misc>0) body+='Miscellaneous: '+fmt(misc)+'\n';
+ body+='\nESTIMATED MONTHLY SERVICE: '+fmt(total)+' / month\n';
+ if(address) body+='\nService location: '+address+'\n';
+ if(phone) body+='Customer phone: '+phone+'\n';
+ if(notes) body+='\nWalkthrough notes:\n'+notes+'\n';
+ body+='\nThis estimate is based on the walkthrough information and selected services and is subject to final scope confirmation.\n\nChicago Cleaning Company';
+ window.location.href='mailto:'+encodeURIComponent(email)+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+});
+calc();
+</script></body></html>
