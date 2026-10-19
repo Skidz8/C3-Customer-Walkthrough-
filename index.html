@@ -1,0 +1,108 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><title>C3 Customer Walkthrough</title><style>
+:root{--bg:#020912;--card:#071827;--blue:#0797e6;--white:#fff;--muted:#a9bdd0;--border:#14547e}*{box-sizing:border-box}body{margin:0;background:linear-gradient(#01060b,#061522);color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}.wrap{max-width:760px;margin:auto;padding:16px 14px 42px}.hero,.card{border:1px solid var(--border);border-radius:18px;background:linear-gradient(135deg,#02070d,#07304d);padding:18px;margin-bottom:12px}.card{background:linear-gradient(#0a2134,#071827)}.logo{font-size:28px;font-weight:900}.logo b{color:#42b8ff}.tag,.note{color:var(--muted)}h2{font-size:18px;margin:0 0 10px}label{display:block;font-size:13px;font-weight:800;margin:10px 0 5px}input,textarea{width:100%;min-height:48px;border:1px solid #28658d;background:#04111d;color:#fff;border-radius:11px;padding:10px;font-size:17px}.grid,.checks{display:grid;grid-template-columns:1fr 1fr;gap:9px}.freq{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.freq button,.choice{min-height:46px;border:1px solid #28658d;background:#061522;color:#fff;border-radius:11px;font-weight:800}.active{background:#0797e6!important}.radio-line{display:flex;gap:12px;align-items:flex-start;padding:12px;border:1px solid #28658d;border-radius:12px;margin:10px 0;font-weight:400}.radio-line input{width:20px;min-height:20px;height:20px;accent-color:#0797e6;flex:none;margin:2px 0}.radio-line span{display:block}.radio-line small{display:block;color:var(--muted);font-size:12px;line-height:1.5;margin-top:3px}.choice{text-align:left;padding:10px}.choice.active:before{content:"✓ "}.base{display:flex;justify-content:space-between;margin-top:12px;padding:13px;border:1px solid #176da8;border-radius:12px}.base strong{font-size:22px;color:#6acbff}.price{position:sticky;bottom:10px;background:linear-gradient(135deg,#006eae,#0797e6);border:1px solid #74d0ff;border-radius:18px;padding:17px;box-shadow:0 10px 30px #0009}.amount{font-size:38px;font-weight:950}.breakdown{font-size:13px;line-height:1.6}.note{font-size:12px;margin-top:9px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}.actions button{min-height:48px;border-radius:11px;border:0;font-weight:900}.save{background:#fff;color:#052036}.reset{background:#071827;color:#fff;border:1px solid #3979a3!important}@media(max-width:520px){.grid,.checks{grid-template-columns:1fr}}
+
+#proposal{display:none}
+@media print{
+ @page{size:letter;margin:.6in}
+ body{background:white!important;color:#152536!important;font-family:Arial,sans-serif}
+ .wrap{display:none!important}
+ #proposal{display:block!important;color:#152536!important}
+ #proposal .p-head{display:flex;justify-content:space-between;align-items:start;border-bottom:4px solid #0797e6;padding-bottom:18px;margin-bottom:24px}
+ #proposal .p-brand{font-size:36px;font-weight:900;color:#0878bc}
+ #proposal .p-brand small{display:block;font-size:12px;letter-spacing:1px;color:#17293a}
+ #proposal h1{font-size:18px;margin:0;text-align:right}
+ #proposal h2{font-size:13px;color:#0878bc;border-bottom:1px solid #cbd5df;padding-bottom:6px;margin:20px 0 10px}
+ #proposal .p-meta{display:grid;grid-template-columns:1fr 1fr;gap:20px;font-size:11px;line-height:1.6}
+ #proposal .p-row{display:flex;justify-content:space-between;border-bottom:1px solid #e2e8f0;padding:8px 0;font-size:11px}
+ #proposal .p-total{display:flex;justify-content:space-between;background:#eaf5fc;padding:13px;margin-top:12px;font-size:16px;font-weight:800}
+ #proposal .p-services{font-size:11px;line-height:1.8;columns:2}
+ #proposal .p-notes{font-size:11px;white-space:pre-wrap;overflow-wrap:anywhere}
+ #proposal .p-footer{font-size:9px;color:#566575;margin-top:26px;border-top:1px solid #d1dce6;padding-top:12px}
+}
+</style></head><body><div class="wrap">
+<header class="hero"><div class="logo"><b>C3</b> Chicago Cleaning Company</div><div class="tag">Interactive sample • Customer Walkthrough, Consumables &amp; PDF Proposal</div></header>
+<section class="card"><h2>Customer Information</h2><div class="grid"><div><label>Company Name</label><input id="companyName" placeholder="Company name"></div><div><label>Contact Name</label><input id="contactName" placeholder="Customer contact"></div><div><label>Phone Number</label><input id="customerPhone" type="tel" placeholder="(555) 555-5555"></div><div><label>Email Address</label><input id="customerEmail" type="email" inputmode="email" placeholder="customer@company.com"></div><div><label>Approx. Square Footage</label><input id="squareFeet" type="number" placeholder="e.g. 5,000"></div></div><label>Property Address</label><input id="propertyAddress" placeholder="Street, city, state, ZIP"></section>
+<section class="card"><h2>Service Frequency</h2><div class="freq" id="freq"><button data-n="1">1×</button><button data-n="2">2×</button><button class="active" data-n="3">3×</button><button data-n="4">4×</button><button data-n="5">5×</button></div><div class="base"><span>Base Monthly Service</span><strong id="base">$1,500</strong></div><div class="note">$500/month per weekly cleaning visit. Sample pricing — customize before quoting real customers.</div></section>
+<section class="card"><h2>Building Walkthrough</h2><div class="grid"><div><label>Restrooms</label><input type="number" value="2"></div><div><label>Toilets</label><input type="number" value="2"></div><div><label>Urinals</label><input type="number" value="0"></div><div><label>Break Rooms / Kitchens</label><input type="number" value="1"></div></div><label>Standard Service Checklist</label><div class="checks"><button class="choice active">Trash Removal</button><button class="choice active">Vacuuming</button><button class="choice active">Hard-Floor Cleaning</button><button class="choice active">Dusting</button><button class="choice active">Common Areas</button><button class="choice">High-Touch Disinfecting</button><button class="choice">Restroom Cleaning &amp; Sanitizing</button><button class="choice">Breakroom / Kitchenette Cleaning</button><button class="choice">Recycling Collection</button><button class="choice">Entryways &amp; Lobby Cleaning</button><button class="choice">Spot Cleaning Interior Glass</button><button class="choice">Spot Cleaning Walls &amp; Doors</button><button class="choice">Conference Room Cleaning</button><button class="choice">Stairwell Cleaning</button><button class="choice">Elevator Cleaning</button><button class="choice">Cobweb Removal (reachable)</button></div></section>
+<section class="card" id="consumables"><h2>Consumables &amp; Supplies</h2><div class="note">Choose who purchases the supplies. C3 will restock selected items during scheduled visits.</div>
+<label class="radio-line"><input type="radio" name="supplier" value="customer" checked> <span><strong>Option 1 — Customer supplies consumables</strong><small>C3 restocks customer-provided supplies. No supply charge.</small></span></label>
+<label class="radio-line"><input type="radio" name="supplier" value="c3"> <span><strong>Option 2 — C3 supplies consumables</strong><small>C3 purchases selected supplies for an additional monthly charge.</small></span></label>
+<label>Select consumables required</label><div class="checks" id="supplyItems"><button class="choice" type="button">Trash Bags / Liners</button><button class="choice" type="button">Toilet Paper</button><button class="choice" type="button">Paper Towels</button><button class="choice" type="button">Hand Soap</button><button class="choice" type="button">Urinal Screens / Deodorizer Blocks</button><button class="choice" type="button">Air Fresheners</button><button class="choice" type="button">Other Supplies</button></div>
+<div id="supplyChargeWrap" style="display:none"><label>Additional Monthly Consumables Charge ($)</label><input id="supplyCharge" type="number" inputmode="decimal" min="0" step="5" value="150"><div class="note">Editable amount. Set based on expected usage and C3's actual cost.</div></div>
+</section>
+<section class="card"><h2>Optional Services — Mock Pricing</h2><div class="checks" id="addons"><button class="choice" data-price="75">Interior Glass +$75</button><button class="choice" data-price="200">Deep Cleaning +$200</button><button class="choice" data-price="150">Carpet Service +$150</button><button class="choice" data-price="200">Floor Scrub / Buff +$200</button><button class="choice" data-price="500">Extra Day of Cleaning +$500</button></div>
+<label>Miscellaneous</label><input id="misc" type="number" inputmode="decimal" min="0" step="25" value="0" placeholder="Enter miscellaneous monthly amount">
+<div class="note">Use Miscellaneous for a custom charge and describe what it covers in the Walkthrough Notes section.</div></section>
+<section class="card"><h2>Walkthrough Notes</h2><textarea id="walkthroughNotes" rows="4" placeholder="Access instructions, special requests, problem areas..."></textarea></section>
+<div class="price"><b>ESTIMATED MONTHLY SERVICE</b><div class="amount" id="total">$1,500 / month</div><div class="breakdown" id="breakdown">Base cleaning: $1,500<br>Add-ons: $0</div></div>
+<div class="actions" style="grid-template-columns:1fr;margin-top:12px"><button id="generatePdf" class="save" type="button">Generate PDF Proposal</button><button id="emailQuote" class="reset" type="button">Email Quote (Text Only)</button></div>
+<div class="actions"><button class="save" type="button" id="saveWalkthrough">Save Walkthrough</button><button class="reset" type="button" onclick="location.reload()">Reset</button></div>
+</div><article id="proposal" aria-label="Printable customer proposal"></article><script>
+let visits=3;const fmt=n=>'$'+n.toLocaleString('en-US');function calc(){const base=visits*500;let a=0;document.querySelectorAll('#addons .choice.active').forEach(x=>a+=Number(x.dataset.price||0));const misc=Math.max(0,Number(document.getElementById('misc').value||0));const supplies=document.querySelector('input[name="supplier"]:checked').value==='c3'?Math.max(0,Number(document.getElementById('supplyCharge').value||0)):0;document.getElementById('base').textContent=fmt(base);document.getElementById('total').textContent=fmt(base+a+misc+supplies)+' / month';document.getElementById('breakdown').innerHTML='Base cleaning: '+fmt(base)+'<br>Add-ons: '+fmt(a)+'<br>Consumables: '+fmt(supplies)+'<br>Miscellaneous: '+fmt(misc)}
+document.querySelectorAll('#freq button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#freq button').forEach(x=>x.classList.remove('active'));b.classList.add('active');visits=Number(b.dataset.n);calc()});document.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{b.classList.toggle('active');calc()});document.getElementById('misc').addEventListener('input',calc);document.getElementById('supplyCharge').addEventListener('input',calc);document.querySelectorAll('input[name="supplier"]').forEach(r=>r.addEventListener('change',()=>{document.getElementById('supplyChargeWrap').style.display=r.checked&&r.value==='c3'?'block':document.querySelector('input[name="supplier"]:checked').value==='c3'?'block':'none';calc()}));
+
+document.getElementById('emailQuote').addEventListener('click',()=>{
+ const email=(document.getElementById('customerEmail').value||'').trim();
+ if(!email){ alert('Please enter the customer email address first.'); document.getElementById('customerEmail').focus(); return; }
+ const company=(document.getElementById('companyName').value||'Customer').trim();
+ const contact=(document.getElementById('contactName').value||'').trim();
+ const phone=(document.getElementById('customerPhone').value||'').trim();
+ const address=(document.getElementById('propertyAddress').value||'').trim();
+ const notes=(document.getElementById('walkthroughNotes').value||'').trim();
+ const base=visits*500;
+ let addonTotal=0, selected=[];
+ document.querySelectorAll('#addons .choice.active').forEach(x=>{
+   const price=Number(x.dataset.price||0);
+   addonTotal+=price;
+   selected.push(x.textContent.trim());
+ });
+ const misc=Math.max(0,Number(document.getElementById('misc').value||0));
+ const supplyByC3=document.querySelector('input[name="supplier"]:checked').value==='c3';
+ const supplyCharge=supplyByC3?Math.max(0,Number(document.getElementById('supplyCharge').value||0)):0;
+ const suppliesSelected=[...document.querySelectorAll('#supplyItems .choice.active')].map(x=>x.textContent.trim());
+ const total=base+addonTotal+misc+supplyCharge;
+ const subject='Chicago Cleaning Company – Cleaning Service Quote';
+ let body='Hello'+(contact?' '+contact:'')+',\n\n';
+ body+='Thank you for the opportunity to provide a cleaning service estimate for '+company+'.\n\n';
+ body+='PROPOSED CLEANING SERVICE\n';
+ body+='Service frequency: '+visits+' day'+(visits===1?'':'s')+' per week\n';
+ body+='Base monthly service: '+fmt(base)+'\n';
+ if(selected.length){ body+='\nSelected additional services:\n- '+selected.join('\n- ')+'\n'; }
+ if(supplyByC3) body+='C3-provided consumables: '+fmt(supplyCharge)+' / month\n';
+ body+='Consumables supplied by: '+(supplyByC3?'C3':'Customer')+'\n';
+ if(suppliesSelected.length)body+='Consumables: '+suppliesSelected.join(', ')+'\n';
+ if(misc>0) body+='Miscellaneous: '+fmt(misc)+'\n';
+ body+='\nESTIMATED MONTHLY SERVICE: '+fmt(total)+' / month\n';
+ if(address) body+='\nService location: '+address+'\n';
+ if(phone) body+='Customer phone: '+phone+'\n';
+ if(notes) body+='\nWalkthrough notes:\n'+notes+'\n';
+ body+='\nThis estimate is based on the walkthrough information and selected services and is subject to final scope confirmation.\n\nChicago Cleaning Company';
+ window.location.href='mailto:'+encodeURIComponent(email)+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+});
+document.getElementById('generatePdf').addEventListener('click',()=>{
+ const val=id=>(document.getElementById(id).value||'').trim();
+ const escapeHTML=str=>String(str).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const company=val('companyName')||'Customer';
+ const selected=[...document.querySelectorAll('.card .checks:not(#addons) .choice.active')].map(x=>x.textContent.trim());
+ const addons=[...document.querySelectorAll('#addons .choice.active')].map(x=>({name:x.textContent.replace(/\s*\+\$[\d,]+\s*$/,'').trim(),price:Number(x.dataset.price||0)}));
+ const base=visits*500, extras=addons.reduce((sum,a)=>sum+a.price,0),misc=Math.max(0,Number(val('misc')||0));const supplyByC3=document.querySelector('input[name="supplier"]:checked').value==='c3';const supplyCharge=supplyByC3?Math.max(0,Number(val('supplyCharge')||0)):0;const supplyItems=[...document.querySelectorAll('#supplyItems .choice.active')].map(x=>x.textContent.trim());
+ const date=new Date(), dateLabel=date.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+ const rows=[['Base cleaning ('+visits+' visit'+(visits===1?'':'s')+'/week)',base],...addons.map(a=>[a.name,a.price])];
+ if(supplyByC3)rows.push(['C3-provided consumables',supplyCharge]);if(misc)rows.push(['Miscellaneous (see notes)',misc]);
+ const line=(name,price)=>'<div class="p-row"><span>'+escapeHTML(name)+'</span><strong>'+fmt(price)+'</strong></div>';
+ const contact=[val('contactName'),val('customerPhone'),val('customerEmail')].filter(Boolean).map(escapeHTML).join('<br>');
+ const address=escapeHTML(val('propertyAddress'));
+ document.getElementById('proposal').innerHTML=`
+ <div class="p-head"><div class="p-brand">C3<small>CHICAGO CLEANING COMPANY</small></div><div><h1>COMMERCIAL CLEANING<br>PROPOSAL</h1><div style="text-align:right;font-size:10px;margin-top:8px">Prepared ${dateLabel}</div></div></div>
+ <div class="p-meta"><div><strong>PREPARED FOR</strong><br><b>${escapeHTML(company)}</b><br>${contact}</div><div><strong>SERVICE LOCATION</strong><br>${address||'To be confirmed'}<br><strong>SERVICE FREQUENCY</strong><br>${visits} visit${visits===1?'':'s'} per week${val('squareFeet')?'<br>Approx. '+escapeHTML(val('squareFeet'))+' sq. ft.':''}</div></div>
+ <h2>PROPOSED CLEANING SERVICES</h2><div class="p-services">${selected.length?selected.map(x=>'&#10003; '+escapeHTML(x)).join('<br>'):'Scope to be confirmed'}</div>
+ <h2>CONSUMABLES &amp; SUPPLIES</h2><div style="font-size:11px;line-height:1.7"><strong>Provided by:</strong> ${supplyByC3?'C3 (additional monthly charge)':'Customer (C3 restocks)'}<br><strong>Items:</strong> ${supplyItems.length?supplyItems.map(escapeHTML).join(', '):'None selected'}</div>
+ <h2>MONTHLY SERVICE PRICING</h2>${rows.map(x=>line(...x)).join('')}
+ <div class="p-total"><span>ESTIMATED MONTHLY TOTAL</span><span>${fmt(base+extras+misc+supplyCharge)}</span></div>
+ ${val('walkthroughNotes')?'<h2>ADDITIONAL NOTES / SPECIAL REQUIREMENTS</h2><div class="p-notes">'+escapeHTML(val('walkthroughNotes'))+'</div>':''}
+ <div class="p-footer">This proposal is an estimate based on the information collected during the walkthrough. Final scope, service schedule, pricing, and terms are subject to confirmation in a signed service agreement. Pricing is shown as a monthly amount. Chicago Cleaning Company (C3).</div>`;
+ window.print();
+});
+document.getElementById('saveWalkthrough').addEventListener('click',()=>{const data={};document.querySelectorAll('input:not([type=radio]),textarea').forEach(el=>{if(el.id)data[el.id]=el.value});data.visits=visits;data.supplier=document.querySelector('input[name="supplier"]:checked').value;data.services=[...document.querySelectorAll('.choice.active')].map(x=>x.textContent.trim());localStorage.setItem('c3_walkthrough_sample',JSON.stringify(data));alert('Walkthrough saved on this device/browser.');});
+try{const saved=JSON.parse(localStorage.getItem('c3_walkthrough_sample')||'null');if(saved){Object.keys(saved).forEach(id=>{const el=document.getElementById(id);if(el&&typeof saved[id]==='string')el.value=saved[id]});if(saved.supplier){const r=document.querySelector('input[name="supplier"][value="'+saved.supplier+'"]');if(r){r.checked=true;document.getElementById('supplyChargeWrap').style.display=saved.supplier==='c3'?'block':'none'}}if(saved.visits){const b=document.querySelector('#freq button[data-n="'+saved.visits+'"]');if(b)b.click()}document.querySelectorAll('.choice').forEach(b=>b.classList.toggle('active',Array.isArray(saved.services)&&saved.services.includes(b.textContent.trim())));}}catch(e){}calc();
+</script></body></html>
